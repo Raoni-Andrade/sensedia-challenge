@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getUsers, getAlbumsByUserId, getPostsByUserId } from '../services/api';
+import NewUserForm from './NewUserForm';
+import '../css/UsersTable.css';
 
 const UsersTable = () => {
   const [users, setUsers] = useState([]);
@@ -7,6 +9,8 @@ const UsersTable = () => {
   const [hoveredUser, setHoveredUser] = useState(null);
   const [userToRemove, setUserToRemove] = useState(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 5;
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -37,9 +41,16 @@ const UsersTable = () => {
   }, []);
 
   const generateRandomDaysOfWeek = () => {
-    const days = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo', 'Todos', 'Fim de semana', 'Nenhum'];
-    const randomIndex = Math.floor(Math.random() * days.length);
-    return days[randomIndex];
+    const days = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
+    const randomDays = [];
+    const daysCount = Math.floor(Math.random() * days.length) + 1;
+    while (randomDays.length < daysCount) {
+      const randomIndex = Math.floor(Math.random() * days.length);
+      if (!randomDays.includes(days[randomIndex])) {
+        randomDays.push(days[randomIndex]);
+      }
+    }
+    return randomDays.join(', ');
   };
 
   const handleDeleteUser = async (userId) => {
@@ -72,6 +83,17 @@ const UsersTable = () => {
     setShowConfirmation(false);
   }
 
+  const handleUserAdded = (newUser) => {
+    setUsers([...users, newUser]);
+  }
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  }
+
+  const totalPages = Math.ceil(users.length / usersPerPage);
+  const displayedUsers = users.slice((currentPage - 1) * usersPerPage, currentPage * usersPerPage);
+
   return (
     <div>
       {isLoading ? (
@@ -103,7 +125,7 @@ const UsersTable = () => {
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
+              {displayedUsers.map((user) => (
                 <tr
                   key={user.id}
                   onMouseEnter={() => handleMouseEnter(user.id)}
@@ -129,6 +151,18 @@ const UsersTable = () => {
               ))}
             </tbody>
           </table>
+          <div className="pagination">
+          {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index + 1}
+                onClick={() => handlePageChange(index + 1)}
+                disabled={currentPage === index + 1}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+          <NewUserForm onUserAdded={handleUserAdded} />
         </div>
       )}
     </div>
