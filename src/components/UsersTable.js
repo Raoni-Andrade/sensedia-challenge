@@ -5,6 +5,8 @@ const UsersTable = () => {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hoveredUser, setHoveredUser] = useState(null);
+  const [userToRemove, setUserToRemove] = useState(null);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -42,8 +44,10 @@ const UsersTable = () => {
 
   const handleDeleteUser = async (userId) => {
     try {
-      console.log(`Usuário com ID ${userId} foi deletado`);
-      setUsers(users.filter(user => user.id !== userId));
+      console.log(`Usuário com ID ${userToRemove.id} foi deletado`);
+      setUsers(users.filter(user => user.id !== userToRemove.id));
+      setShowConfirmation(false);
+      setUserToRemove(null);
     } catch (error) {
       console.error('Erro ao deletar usuário:', error);
     }
@@ -57,12 +61,35 @@ const UsersTable = () => {
     setHoveredUser(null);
   }
 
+  const openDeleteConfirmation = (userId) => {
+    const userToDelete = users.find(user => user.id === userId);
+    setUserToRemove(userToDelete);
+    setShowConfirmation(true);
+  }
+
+  const closeDeleteConfirmation = () => {
+    setUserToRemove(null);
+    setShowConfirmation(false);
+  }
+
   return (
     <div>
       {isLoading ? (
         <p>Carregando...</p>
       ) : (
         <div>
+        {showConfirmation && (
+          <div className="modal">
+            <div className="modal-content">
+              <h3>Confirmar Remoção</h3>
+              <p>Deseja realmente remover o usuário?</p>
+              <div className="modal-buttons">
+                <button onClick={handleDeleteUser}>Confirmar</button>
+                <button onClick={closeDeleteConfirmation}>Cancelar</button>
+              </div>
+            </div>
+          </div>
+        )}
           <h2>Tabela de Usuários</h2>
           <table>
             <thead>
@@ -92,7 +119,7 @@ const UsersTable = () => {
                     {hoveredUser === user.id && (
                     <span
                       className="delete-icon"
-                      onClick={() => handleDeleteUser(user.id)}
+                      onClick={() => openDeleteConfirmation(user.id)}
                     >
                       🗑️
                     </span>
