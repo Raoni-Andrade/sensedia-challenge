@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { getUsers, getAlbumsByUserId, getPostsByUserId } from '../services/api';
 import NewUserForm from './NewUserForm';
+import Link from 'next/link';
 import '../css/UsersTable.css';
 
-const UsersTable = () => {
-  const [users, setUsers] = useState([]);
+const UsersTable = ({ users, setUsers }) => {
+  // const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hoveredUser, setHoveredUser] = useState(null);
   const [userToRemove, setUserToRemove] = useState(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 5;
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -83,16 +85,41 @@ const UsersTable = () => {
     setShowConfirmation(false);
   }
 
-  const handleUserAdded = (newUser) => {
-    setUsers([...users, newUser]);
-  }
+  // const handleUserAdded = async (newUser) => {
+  //   try {
+  //     const usersAlbum = await getAlbumsByUserId(newUser.id);
+  //     const usersPosts = await getPostsByUserId(newUser.id);
+  //     const updatedUser = { 
+  //       ...newUser,
+  //       albums: usersAlbum ? usersAlbum.length : 0,
+  //       posts: usersPosts ? usersPosts.length : 0,
+  //     };
+  //     setUsers((prevUsers) => [...prevUsers, updatedUser]);
+  //   } catch (error) {
+  //     console.error('Erro ao buscar álbuns e posts do novo usuário:', error);
+  //   }
+  // }
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   }
 
+  const handleSearchChange = (e) => {
+    setSearchText(e.target.value);
+  }
+
+  const filteredUsers = users.filter(user => {
+    const searchTerm = searchText.toLowerCase();
+    return (
+      user.name?.toLowerCase().includes(searchTerm) ||
+      user.username?.toLowerCase().includes(searchTerm) ||
+      user.id.toString().toLowerCase().includes(searchTerm) 
+    );
+  });
+
   const totalPages = Math.ceil(users.length / usersPerPage);
-  const displayedUsers = users.slice((currentPage - 1) * usersPerPage, currentPage * usersPerPage);
+  // const displayedUsers = users.slice((currentPage - 1) * usersPerPage, currentPage * usersPerPage);
+  const displayedUsers = filteredUsers.slice((currentPage - 1) * usersPerPage, currentPage * usersPerPage);
 
   return (
     <div>
@@ -113,6 +140,14 @@ const UsersTable = () => {
           </div>
         )}
           <h2>Tabela de Usuários</h2>
+          <div className="search-bar">
+            <input
+              type="text"
+              placeholder="Buscar por nome ou username..."
+              value={searchText}
+              onChange={handleSearchChange}
+            />
+          </div>
           <table>
             <thead>
               <tr>
@@ -132,7 +167,11 @@ const UsersTable = () => {
                   onMouseLeave={handleMouseLeave}
                  >
                   <td>{user.id}</td>
-                  <td>{user.name}</td>
+                  <td>
+                  <Link href={`/user/${user.name}`}>
+                      {user.name}
+                    </Link>
+                  </td>
                   <td>{user.email}</td>
                   <td>{user.daysOfWeek}</td>
                   <td>{user.posts}</td>
@@ -162,7 +201,7 @@ const UsersTable = () => {
               </button>
             ))}
           </div>
-          <NewUserForm onUserAdded={handleUserAdded} />
+          {/* <NewUserForm onUserAdded={handleUserAdded} /> */}
         </div>
       )}
     </div>

@@ -1,7 +1,6 @@
-// components/NewUserForm.jsx
-
 import React, { useState } from 'react';
 import { createUser } from '../services/api';
+import { useRouter } from 'next/router';
 
 const daysOfWeek = [
   'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'
@@ -13,6 +12,7 @@ const NewUserForm = ({ onUserAdded }) => {
   const [email, setEmail] = useState('');
   const [city, setCity] = useState('');
   const [selectedDays, setSelectedDays] = useState([]);
+  const router = useRouter();
 
   const handleDayChange = (day) => {
     setSelectedDays((prevDays) => 
@@ -29,7 +29,7 @@ const NewUserForm = ({ onUserAdded }) => {
         fullName,
         email,
         city,
-        daysOfWeek: selectedDays
+        daysOfWeek: selectedDays.join(', ')
       });
       onUserAdded(newUser);
       setName('');
@@ -37,8 +37,17 @@ const NewUserForm = ({ onUserAdded }) => {
       setEmail('');
       setCity('');
       setSelectedDays([]);
+      router.push('/user');
     } catch (error) {
-      console.error('Erro ao criar novo usuário:', error);
+      if (error.response && error.response.status === 400) {
+        if (error.response.data.includes('duplicate key value violates unique constraint "users_email_key"')) {
+          alert('Este endereço de e-mail já está em uso. Por favor, use um e-mail diferente.');
+        } else {
+          alert('Erro ao criar novo usuário. Por favor, tente novamente mais tarde.');
+        }
+      } else {
+        console.error('Erro ao criar novo usuário:', error);
+      }
     }
   };
 
@@ -59,7 +68,6 @@ const NewUserForm = ({ onUserAdded }) => {
           type="text"
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
-          required
         />
       </label>
       <label>
@@ -77,13 +85,14 @@ const NewUserForm = ({ onUserAdded }) => {
           type="text"
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          required
         />
       </label>
       <fieldset>
         <legend>Dias da Semana</legend>
         {daysOfWeek.map((day) => (
-          <label key={day}>
+          <label key={day}
+          required
+          >
             <input
               type="checkbox"
               checked={selectedDays.includes(day)}

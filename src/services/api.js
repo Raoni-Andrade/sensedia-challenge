@@ -58,10 +58,26 @@ export const getPostsByUserId = async (userId) => {
 export const createUser = async (userData) => {
   try {
     const response = await axios.post(`${API_URL}/api/v1/users/create`, userData);
-    console.log(response.data);
-    return response.data;
+    console.log(response.data.user);
+    return response.data.user;
   } catch (error) {
     console.error('Erro ao criar usuário:', error);
     throw error;
   }
+};
+
+export const getUserByUsername = async (username) => {
+  try {
+    const users = await getUsers();
+    return users.find(user => user.name === username);
+  } catch (error) {
+    console.error('Erro ao buscar usuário:', error);
+    throw error;
+  }
+};
+
+export const getUserData = async () => {
+  return {
+    username: 'User_47080dcb-afff-45be-8ec0-341ff030fb70',
+  };
 };
