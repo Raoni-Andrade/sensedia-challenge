@@ -124,7 +124,7 @@ const UsersTable = ({ users, setUsers }) => {
   return (
     <div>
       {isLoading ? (
-        <p>Carregando...</p>
+        <p>Carregando tabela...</p>
       ) : (
         <div>
         {showConfirmation && (
@@ -143,7 +143,7 @@ const UsersTable = ({ users, setUsers }) => {
           <div className="search-bar">
             <input
               type="text"
-              placeholder="Buscar por nome ou username..."
+              placeholder="Buscar por nome ou ID"
               value={searchText}
               onChange={handleSearchChange}
             />

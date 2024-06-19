@@ -37,7 +37,7 @@ const UsersPage = () => {
   return (
     <div>
       <Header user={currentUser} />
-      <h1>Usários e Formulário juntos</h1>
+      <h1>Usuários e Formulário juntos</h1>
       <UsersTable users={users} setUsers={setUsers}/>
       <h2>Formulário de Registro</h2>
       <NewUserForm onUserAdded={handleUserAdded}/>

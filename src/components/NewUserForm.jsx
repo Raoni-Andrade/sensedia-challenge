@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createUser } from '../services/api';
 import { useRouter } from 'next/router';
+import '../css/NewUserForm.css';
 
 const daysOfWeek = [
   'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'
@@ -53,41 +54,41 @@ const NewUserForm = ({ onUserAdded }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label>
-        Nome de Usuário:
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Nome Completo:
-        <input
-          type="text"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
-        />
-      </label>
-      <label>
-        Email:
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Cidade:
-        <input
-          type="text"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-        />
-      </label>
-      <fieldset>
+      <div className="form-group half-width">
+        <label>Nome de Usuário:</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+      </div>
+      <div className="form-group half-width">
+        <label>Nome Completo:</label>
+          <input
+            type="text"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+          />
+      </div>
+      <div className="form-group half-width">
+        <label>Email:</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+      </div>
+      <div className="form-group half-width">
+        <label>Cidade:</label>
+          <input
+            type="text"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+          />
+      </div>
+      <fieldset className="form-group half-width">
         <legend>Dias da Semana</legend>
         {daysOfWeek.map((day) => (
           <label key={day}
@@ -102,7 +103,10 @@ const NewUserForm = ({ onUserAdded }) => {
           </label>
         ))}
       </fieldset>
-      <button type="submit">Adicionar Usuário</button>
+      <div className="form-buttons">
+        <button type="submit">Adicionar Usuário</button>
+        <button type="button">Cancelar</button>
+      </div>
     </form>
   );
 };
