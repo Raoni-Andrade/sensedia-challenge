@@ -1,9 +1,10 @@
 .header {
   position: sticky;
   top: 0;
-  background-color: rgb(95, 92, 92);
   z-index: 1000;
   border-bottom: 1px solid #ddd;
+  background-color: rgb(61, 61, 61);
+  padding: 20px;
 }
 
 .container {
@@ -16,6 +17,40 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: #FAFAFA;
+}
+
+.second-header {
+  padding: 0px;
+  margin-bottom: 0;
+}
+
+.card-row {
+  background-color: #8556AA;
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.card-row svg {
+  margin-right: 15px;
+}
+
+.card {
+  display: flex;
+  flex-flow: row;
+  align-self: center;
+}
+
+.banner {
+  display: flex;
+  flex-flow: column;
+  align-self: center;
+  color: white;
+}
+
+.banner h3, p {
+  margin: 0;
 }
 
 .logo {
@@ -26,10 +61,6 @@
 .nav {
   display: flex;
   align-items: center;
-}
-
-.user-menu {
-  margin-left: auto;
 }
 
 .botaoDropDown:hover {

@@ -129,11 +129,10 @@ const UsersTable = ({ users, setUsers }) => {
             </div>
           </div>
         )}
-          <h2>Tabela de Usuários</h2>
           <div className="search-bar">
             <input
               type="text"
-              placeholder="Buscar por nome ou ID"
+              placeholder="Procurar"
               value={searchText}
               onChange={handleSearchChange}
             />
@@ -151,7 +150,6 @@ const UsersTable = ({ users, setUsers }) => {
               </tr>
             </thead>
             <tbody>
-              <List displayedUsers={displayedUsers}/>
               {displayedUsers.map((user) => (
                 <tr
                   key={user.id}
