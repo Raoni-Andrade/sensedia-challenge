@@ -53,7 +53,7 @@ const DropdownUserMenu = ({ userData }) => {
         onKeyDown={handleKeyDown} 
         onMouseEnter={handleMouseEnter}
       >
-        <span className="username">{userData?.username || 'Usuário'}</span>
+        <span className="username">{userData?.username || 'Nome de usuário'}</span>
       </button>
       {isOpen && (
         <ul 

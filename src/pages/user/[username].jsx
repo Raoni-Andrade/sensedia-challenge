@@ -49,6 +49,7 @@ const UserProfile = () => {
 
   return (
     <div className="profile-container">
+      <Breadcrumb />
       <h1>Perfil do Usuário: {user.name}</h1>
       <div className="profile-info">
       <p><label>Username:</label> <span>{user.name}</span></p>
@@ -57,7 +58,6 @@ const UserProfile = () => {
       <p><label>User ID:</label> <span>{user.id}</span></p>
       <p><label>Dias da Semana:</label> <span>{user.daysOfWeek ? user.daysOfWeek.join(', ') : 'Nenhum'}</span></p>
       </div>
-      <Breadcrumb />
     </div>
   );
 };
