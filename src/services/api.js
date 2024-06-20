@@ -66,6 +66,17 @@ export const createUser = async (userData) => {
   }
 };
 
+export const deleteUser = async (userId) => {
+  try {
+    const response = await axios.delete(`${API_URL}/api/v1/users/${userId}`);
+    console.log(response.data.message);
+    return response.data.message;
+  } catch (error) {
+    console.error('Erro ao deletar usuário:', error);
+    throw error;
+  }
+};
+
 export const getUserByUsername = async (username) => {
   try {
     const users = await getUsers();
