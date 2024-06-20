@@ -1,3 +1,4 @@
+import React from 'react';
 import Header from '../../components/Header';
 import NewUserForm from '../../components/NewUserForm';
 import { getAlbumsByUserId, getPostsByUserId } from '../../services/api';

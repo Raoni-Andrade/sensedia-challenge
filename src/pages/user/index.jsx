@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import UsersTable from '../../components/UsersTable';
-// import Breadcrumb from '../../components/Breadcrumb';
 import React from "react";
 import Header from '../../components/Header';
 import { getUsers } from '../../services/api';
@@ -14,7 +13,6 @@ const UsersPage = () => {
     const fetchUsers = async () => {
       const userData = await getUsers();
       setUsers(userData);
-      // Defina o usuário atual, substitua com a lógica real de seleção do usuário atual
       setCurrentUser(userData[0]); 
     };
 

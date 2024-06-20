@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import UsersTable from '../components/UsersTable';
 import { getAlbumsByUserId, getPostsByUserId, getUsers } from '../services/api';
@@ -12,7 +12,6 @@ const UsersPage = () => {
     const fetchUsers = async () => {
       const userData = await getUsers();
       setUsers(userData);
-      // Defina o usuário atual, substitua com a lógica real de seleção do usuário atual
       setCurrentUser(userData[0]); 
     };
 
