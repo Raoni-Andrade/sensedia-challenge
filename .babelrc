@@ -4,6 +4,6 @@
     "@babel/preset-react"
   ],
   "plugins": [
-    // Add any additional Babel plugins you need here
+    "@babel/plugin-syntax-jsx"
   ]
 }
