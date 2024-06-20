@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { getUsers, getAlbumsByUserId, getPostsByUserId } from '../services/api';
+import { getUsers, getAlbumsByUserId, getPostsByUserId, deleteUser } from '../services/api';
 import NewUserForm from './NewUserForm';
 import Link from 'next/link';
 import '../css/UsersTable.css';
+import List from './List';
 
 const UsersTable = ({ users, setUsers }) => {
   // const [users, setUsers] = useState([]);
@@ -58,9 +59,10 @@ const UsersTable = ({ users, setUsers }) => {
   const handleDeleteUser = async (userId) => {
     try {
       console.log(`Usuário com ID ${userToRemove.id} foi deletado`);
-      setUsers(users.filter(user => user.id !== userToRemove.id));
       setShowConfirmation(false);
+      deleteUser(userToRemove.id)
       setUserToRemove(null);
+      return setUsers(users.filter(user => user.id !== userToRemove.id));
     } catch (error) {
       console.error('Erro ao deletar usuário:', error);
     }
@@ -78,27 +80,15 @@ const UsersTable = ({ users, setUsers }) => {
     const userToDelete = users.find(user => user.id === userId);
     setUserToRemove(userToDelete);
     setShowConfirmation(true);
+  
+    // API call to delete user
+
   }
 
   const closeDeleteConfirmation = () => {
     setUserToRemove(null);
     setShowConfirmation(false);
   }
-
-  // const handleUserAdded = async (newUser) => {
-  //   try {
-  //     const usersAlbum = await getAlbumsByUserId(newUser.id);
-  //     const usersPosts = await getPostsByUserId(newUser.id);
-  //     const updatedUser = { 
-  //       ...newUser,
-  //       albums: usersAlbum ? usersAlbum.length : 0,
-  //       posts: usersPosts ? usersPosts.length : 0,
-  //     };
-  //     setUsers((prevUsers) => [...prevUsers, updatedUser]);
-  //   } catch (error) {
-  //     console.error('Erro ao buscar álbuns e posts do novo usuário:', error);
-  //   }
-  // }
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -157,9 +147,11 @@ const UsersTable = ({ users, setUsers }) => {
                 <th>Dias da semana</th>
                 <th>Posts</th>
                 <th>Albuns</th>
+                <th>🗑️</th>
               </tr>
             </thead>
             <tbody>
+              <List displayedUsers={displayedUsers}/>
               {displayedUsers.map((user) => (
                 <tr
                   key={user.id}
