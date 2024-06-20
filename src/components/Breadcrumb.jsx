@@ -1,11 +1,10 @@
+import React from "react";
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import DropdownUserMenu from './DropdownUserMenu.jsx';
-// import DropdownUserMenuNext from './DropdownUserMenuNext.jsx';
 import { getUserData } from '../services/api';
 import '../css/Breadcrumb.css';
 import { useRouter } from 'next/router';
-import React from "react";
 
 const Breadcrumb = () => {
   const [userData, setUserData] = useState(null);
@@ -33,7 +32,7 @@ const Breadcrumb = () => {
     <nav className="breadcrumb">
       <ul>
       {breadcrumbs.map((breadcrumb, index) => (
-          <li key={breadcrumb.path} className={index === breadcrumbs.length - 1 ? 'active' : ''}>
+          <li key={`${breadcrumb.path}-${index}`} className={index === breadcrumbs.length - 1 ? 'active' : ''}>
             {index === breadcrumbs.length - 1 ? (
               breadcrumb.name
             ) : (

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import '../css/DropdownUserMenu.css'; 
 
@@ -12,15 +12,16 @@ const DropdownUserMenu = ({ userData }) => {
         setIsOpen(false);
       }
     };
-
+    
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
+
   }, []);
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(true);
   };
 
   const closeMenu = () => {
@@ -33,13 +34,32 @@ const DropdownUserMenu = ({ userData }) => {
     }
   };
 
+  const handleMouseEnter = () => {
+    if (!isOpen) {
+      setIsOpen(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    closeMenu();
+  };
+
+
   return (
     <div className="dropdown" ref={dropdownRef} onMouseLeave={closeMenu}>
-      <button className="dropdown-toggle" onClick={toggleMenu} onKeyDown={handleKeyDown} onMouseEnter={() => setIsOpen(true)}>
+      <button 
+        className="dropdown-toggle" 
+        onClick={toggleMenu} 
+        onKeyDown={handleKeyDown} 
+        onMouseEnter={handleMouseEnter}
+      >
         <span className="username">{userData?.username || 'Usuário'}</span>
       </button>
       {isOpen && (
-        <ul className="dropdown-menu" onMouseEnter={() => setIsOpen(true)} onMouseLeave={closeMenu}>
+        <ul 
+          className="dropdown-menu" 
+          onMouseLeave={handleMouseLeave}
+        >
           <li>
             <Link href="/#">
               Lista de Amigos
@@ -65,7 +85,7 @@ const DropdownUserMenu = ({ userData }) => {
             </Link>
           </li>
         </ul>
-      )}
+        )}
     </div>
   );
 };

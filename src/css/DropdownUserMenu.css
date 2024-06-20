@@ -26,10 +26,11 @@
 .dropdown-menu li {
   list-style: none;
   cursor: pointer;
+  
 }
 
 .dropdown-menu li:hover {
-  background-color: #f0f0f0;
+  background-color: red;
 }
 
 .dropdown-menu a {
