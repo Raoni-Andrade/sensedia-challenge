@@ -3,6 +3,7 @@ import UsersTable from '../../components/UsersTable';
 import React from "react";
 import Header from '../../components/Header';
 import { getUsers } from '../../services/api';
+import HelpBanner from '../../components/HelpBanner';
 
 
 const UsersPage = () => {
@@ -22,8 +23,8 @@ const UsersPage = () => {
   return (
     <div>
       <Header user={currentUser} />
-      <h1>Usuários</h1>
       <UsersTable users={users} setUsers={setUsers}/>
+      <HelpBanner />
     </div>
   );
 };

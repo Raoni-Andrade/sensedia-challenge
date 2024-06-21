@@ -1,3 +1,10 @@
+.main-container {
+  max-width: 70%;
+  margin: 0 auto;
+  padding: 10px 20px;
+
+}
+
 h1, h2 {
   margin-top: 2rem;
   margin-bottom: 1rem;
@@ -114,15 +121,38 @@ td a:hover {
 .search-bar {
   margin-top: 1rem;
   margin-bottom: 1rem;
+  position: relative;
 }
 
 .search-bar input[type="text"] {
   width: 100%;
   padding: 0.5rem;
   font-size: 1rem;
-  border: 1px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box;
+}
+
+.input-search, .search-bar {
+  border: none;
+  background-color: #3D3D3D0F;
+  box-shadow: 0 4px 6px #3D3D3D0F;
+  border-bottom: 1px solid #3D3D3D;
+}
+
+.input-search {
+  width: 100%;
+  padding: 10px;
+  padding-right: 40px;
+  border: none;
+}
+
+.search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  fill: #3D3D3D;
+  cursor: pointer;
 }
 
 .search-bar input[type="text"]:focus {
