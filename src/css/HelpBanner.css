@@ -1,0 +1,23 @@
+.help-row{
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.help-card {
+  display: flex;
+  flex-flow: column;
+  align-self: center;
+}
+
+.help-text {
+  display: flex;
+  flex-flow: row;
+  align-self: center;
+  color: black;
+  align-items: center;
+}
+
+.help-card h3 {
+  color: #8556AA;
+}
