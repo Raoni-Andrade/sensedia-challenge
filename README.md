@@ -1,36 +1,145 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Instruções
+Estas instruções vão te ajudar a obter uma cópia do projeto e executá-lo na sua máquina local para fins de desenvolvimento e teste. 
 
-## Getting Started
+A documentação do Swagger da aplicação está disponível em http://{SEU_HOST}:{SUA_PORTA}/swagger/index.html
 
-First, run the development server:
+### Pré-requisitos
+Você precisa ter instalado o seguinte software:
+
+- [Go](https://golang.org/doc/install)
+- [Docker](https://docs.docker.com/install/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+- [Make](https://www.gnu.org/software/make/)
+- [Python3](https://www.python.org/downloads/)
+- [Pip](https://pip.pypa.io/en/stable/installation/)
+- [PostgreSQL](https://www.postgresql.org/download/)
+- [Rustup](https://rustup.rs/)
+- [Sqlx](https://github.com/launchbadge/sqlx/blob/main/sqlx-cli/README.md)
+
+### Instalação
+
+Após instalar os pré-requisitos, você precisa instalar as dependências do projeto.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pip install load_dotenv
+pip install psycopg2
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Após instalar as dependências, você precisa construir o contêiner do banco de dados. Certifique-se de ter seu arquivo .env com os valores corretos, conforme exemplificado no .env.sample.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+ docker compose up -d
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Após construir o contêiner do banco de dados, você precisa executar as migrações.
 
-## Learn More
+```bash
+make run_migrations
+```
 
-To learn more about Next.js, take a look at the following resources:
+Após executar as migrações, popule o banco de dados com dados falsos
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+make populate_db
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Depois disso, você precisa buildar e executar a aplicação.
 
-## Deploy on Vercel
+```bash
+make build
+make run
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Você também pode executar a aplicação com recarga ao vivo usando air ou o comando make fornecido abaixo na seção Makefile.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Makefile
+
+```bash
+make build
+```
+
+Construir a aplicação
+
+```bash
+make build
+```
+
+Executar a aplicação
+
+```bash
+make run
+```
+
+Recarga ao vivo da aplicação.  Se você já tem air instalado, mas nosso comando não estiver funcionando, você pode executá-lo diretamente com air.
+
+```bash
+make watch
+```
+
+Executar a suíte de testes
+
+```bash
+make test
+```
+
+Limpar binário da última construção
+
+```bash
+make clean
+```
+
+Executar as migrações
+
+```bash
+make run_migrations
+```
+
+Executar o rollback das migrações, você precisa executar isso uma vez para cada migração que deseja reverter.
+
+```bash
+make rollback_migrations
+```
+
+Preencher o banco de dados com dados falsos
+
+```bash
+make populate_db
+```
+
+
+## Começando
+
+Clone esse projeto em seu computador com o comando:
+```bash
+	git clone git@github.com:Raoni-Andrade/sensedia-challenge.git
+```
+Acesse a pasta do projeto seu terminal:
+```bash
+	cd sensedia-challenge
+```
+Já pasta da aplicação em seu terminal, digite o seguinte comando:
+```bash
+	yarn install ou npm install
+```
+
+> Após ter configurado o projeto e ter aguardado a instalação das dependencias de desenvolvimento, execute o comando:
+```bash
+npm run dev
+# ou
+yarn dev
+```
+> A aplicação estará disponível para visualização em seu navegador, caso isso não aconteça automaticamente abra o seu navegador no seguinte endereço: [http://localhost:3000/user](http://localhost:3000/user) 
+
+## Testes
+
+Para conferir os testes, basta executar o comando:
+
+```bash
+npm run test
+# ou
+yarn test
+# ou
+npm run test:watch
+# ou
+npm run test:coverage
+```

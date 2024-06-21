@@ -99,7 +99,7 @@ const NewUserForm = ({ onUserAdded }) => {
               />
           </div>
           <fieldset className="form-group checkbox-group">
-            <legend>Dias da Semana</legend>
+            <legend>DIAS DA SEMANA</legend>
             <div className="checkbox-container">
               {daysOfWeek.map((day) => (
                 <label key={day}

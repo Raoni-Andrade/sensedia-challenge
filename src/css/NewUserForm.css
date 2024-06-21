@@ -97,6 +97,7 @@ fieldset {
 legend {
   font-weight: bold;
   margin-bottom: 0.5rem;
+  color: #919191;
 }
 
 input[type="checkbox"] {
