@@ -12,10 +12,19 @@ const DropdownUserMenu = ({ userData }) => {
         setIsOpen(false);
       }
     };
-    
+
+    const handleEsc = (event) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
+  
+    document.addEventListener('keydown', handleEsc);    
     document.addEventListener('mousedown', handleClickOutside);
+    
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEsc);
     };
 
   }, []);
@@ -60,26 +69,27 @@ const DropdownUserMenu = ({ userData }) => {
           className="dropdown-menu" 
           onMouseLeave={handleMouseLeave}
         >
-          <li>
+          <li className="drop-option">
             <Link href="/#">
               Lista de Amigos
             </Link>
           </li>
-          <li>
+          <li className="drop-option">
             <Link href="/#">
               Artigos salvos
             </Link>
           </li>
-          <li>
+          <li className="drop-option">
             <Link href="/#">
               Notificações
             </Link>
           </li>
-          <li>
+          <li className="drop-option">
             <Link href="/#">
               Preferências
             </Link>
-          </li><li>
+          </li>
+          <li className="drop-option">
             <Link href="/#">
               Fechar Sessão
             </Link>

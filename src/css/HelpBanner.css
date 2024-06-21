@@ -1,4 +1,10 @@
-.help-row{
+.wrapper {
+  max-width: 70%;
+  margin: 0 auto;
+  padding: 10px 20px;
+}
+
+.help-row {
   display: flex;
   justify-content: space-around;
   padding: 20px;

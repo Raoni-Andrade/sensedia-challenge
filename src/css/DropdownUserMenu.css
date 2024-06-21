@@ -30,7 +30,7 @@
 }
 
 .dropdown-menu li:hover {
-  background-color: red;
+  background-color: #9261B5;
 }
 
 .dropdown-menu a {
@@ -41,5 +41,5 @@
 }
 
 .dropdown-menu a:hover {
-  background-color: #f0f0f0;
+  /* background-color: #f0f0f0; */
 }

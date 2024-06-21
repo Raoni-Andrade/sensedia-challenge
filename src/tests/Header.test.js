@@ -4,16 +4,15 @@ import Header from '../components/Header.js';
 
 describe('Header component', () => {
   test('renders without crashing', () => {
-    render(<Header userData={{}} />); // pass an empty object as userData prop
+    render(<Header userData={{}} />); 
+    
+    const headerElement = screen.getByRole('banner');
+    expect(headerElement).toBeInTheDocument();
+
+    expect(screen.getByTestId('breadcrumb')).toBeInTheDocument();
+
+    // Check if the DropdownUserMenu component is in the document
+    expect(screen.getByTestId('dropdown-user-menu')).toBeInTheDocument();
+  
   });
-
-  // it('renders the breadcrumb', () => {
-  //   render(<Header user={user} />);
-  //   expect(screen.getByTestId('breadcrumb')).toBeInTheDocument();
-  // });
-
-  // it('renders the user menu', () => {
-  //   render(<Header user={user} />);
-  //   expect(screen.getByTestId('user-menu')).toBeInTheDocument();
-  // });
 });
