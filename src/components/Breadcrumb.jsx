@@ -1,20 +1,16 @@
 import React from "react";
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import DropdownUserMenu from './DropdownUserMenu.jsx';
-import { getUserData } from '../services/api';
-import '../css/Breadcrumb.css';
 import { useRouter } from 'next/router';
+import '../css/Breadcrumb.css';
+import '../css/global.css';
 
 const Breadcrumb = () => {
-  const [userData, setUserData] = useState(null);
-
   const router = useRouter();
   const pathSegments = router.asPath.split('/').filter(segment => segment);
 
   const generateBreadcrumbs = () => {
     const breadcrumbs = [
-      { name: 'Bem vindo', path: '/user' },
+      { name: 'BEM-VINDO', path: '/user' },
       { name: 'Registro', path: '/users/new' }
     ];
 

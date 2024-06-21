@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { createUser } from '../services/api';
 import { useRouter } from 'next/router';
 import '../css/NewUserForm.css';
+import '../css/global.css';
 
 const daysOfWeek = [
-  'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'
+  'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'
 ];
 
 const NewUserForm = ({ onUserAdded }) => {
@@ -53,61 +54,75 @@ const NewUserForm = ({ onUserAdded }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="form-group half-width">
-        <label>Nome de Usuário:</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-      </div>
-      <div className="form-group half-width">
-        <label>Nome Completo:</label>
-          <input
-            type="text"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-          />
-      </div>
-      <div className="form-group half-width">
-        <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-      </div>
-      <div className="form-group half-width">
-        <label>Cidade:</label>
-          <input
-            type="text"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-          />
-      </div>
-      <fieldset className="form-group half-width">
-        <legend>Dias da Semana</legend>
-        {daysOfWeek.map((day) => (
-          <label key={day}
-          required
-          >
-            <input
-              type="checkbox"
-              checked={selectedDays.includes(day)}
-              onChange={() => handleDayChange(day)}
-            />
-            {day}
-          </label>
-        ))}
-      </fieldset>
+    <div className="form-container">
+      <h4>REGISTRO</h4>
+      <form onSubmit={handleSubmit}>
+        <div className="form-row leftRow">
+          <div className="form-group">
+            <label></label>
+              <input
+                type="text"
+                placeholder="Nome de Usuário *"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+          </div>
+          <div className="form-group">
+            <label></label>
+              <input
+                type="email"
+                placeholder="Email *"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+          </div>
+          <div className="form-group">
+            <label></label>
+              <input
+                type="text"
+                placeholder="Nome Completo *"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                />
+            </div>
+          </div>
+        <div className="form-row rightRow">
+          <div className="form-group">
+            <label></label>
+              <input
+                type="text"
+                placeholder="Cidade *"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+              />
+          </div>
+          <fieldset className="form-group checkbox-group">
+            <legend>Dias da Semana</legend>
+            <div className="checkbox-container">
+              {daysOfWeek.map((day) => (
+                <label key={day}
+                className="checkbox-item"
+                required
+                >
+                  <input
+                    type="checkbox"
+                    checked={selectedDays.includes(day)}
+                    onChange={() => handleDayChange(day)}
+                  />
+                  {day}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        </div>
+      </form>
       <div className="form-buttons">
-        <button type="submit">Adicionar Usuário</button>
-        <button type="button">Cancelar</button>
+        <button type="submit">REGISTRAR</button>
+        <button type="button">CANCELAR</button>
       </div>
-    </form>
+    </div>
   );
 };
 

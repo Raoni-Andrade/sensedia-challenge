@@ -23,7 +23,6 @@ const NewUserPage = ({ setUsers }) => {
   return (
     <div>
       <Header />
-      <h1>Novo Usuário</h1>
       <NewUserForm onUserAdded={handleUserAdded}/>
     </div>
   );

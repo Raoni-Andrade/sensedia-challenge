@@ -2,6 +2,7 @@ import React from 'react';
 import Breadcrumb from './Breadcrumb';
 import DropdownUserMenu from './DropdownUserMenu';
 import '../css/Header.css';
+import '../css/global.css';
 
 const Header = ({ userData }) => {
   return (

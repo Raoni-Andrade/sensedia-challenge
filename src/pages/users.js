@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import UsersTable from '../components/UsersTable';
 import { getAlbumsByUserId, getPostsByUserId, getUsers } from '../services/api';
 import NewUserForm from '../components/NewUserForm';
+import '../css/global.css';
 
 const UsersPage = () => {
   const [users, setUsers] = useState([]);
@@ -36,9 +37,7 @@ const UsersPage = () => {
   return (
     <div>
       <Header user={currentUser} />
-      <h1>Usuários e Formulário juntos</h1>
       <UsersTable users={users} setUsers={setUsers}/>
-      <h2>Formulário de Registro</h2>
       <NewUserForm onUserAdded={handleUserAdded}/>
     </div>
   );

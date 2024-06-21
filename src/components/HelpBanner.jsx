@@ -1,5 +1,6 @@
 import React from 'react';
 import '../css/HelpBanner.css';
+import '../css/global.css';
 
 const HelpBanner = () => {
   return (
