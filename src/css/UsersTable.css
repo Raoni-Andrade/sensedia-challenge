@@ -82,6 +82,10 @@ th, td {
   text-align: left;
 }
 
+td:nth-child(1) {
+  font-weight: bold;
+}
+
 thead {
   background-color: #f2f2f2;
 }
@@ -100,7 +104,7 @@ tbody tr:nth-child(even) {
 }
 
 td a {
-  color: #007bff;
+  color: black;
   text-decoration: none;
 }
 
@@ -127,15 +131,12 @@ td a:hover {
   width: 100%;
   padding: 0.5rem;
   font-size: 1rem;
-  border-radius: 4px;
   box-sizing: border-box;
 }
 
 .input-search, .search-bar {
   border: none;
-  background-color: #3D3D3D0F;
   box-shadow: 0 4px 6px #3D3D3D0F;
-  border-bottom: 1px solid #3D3D3D;
 }
 
 .input-search {
@@ -170,26 +171,27 @@ td a:hover {
   margin: 0.25rem;
   padding: 0.5rem 1rem;
   cursor: pointer;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
+  background-color: white;
+  color: black;
+  /* border: none; */
+  border-radius: 30px;
 }
 
 .pagination button[disabled] {
-  opacity: 0.5;
+  background-color: #9E9E9E;
+  color: white;
   cursor: default;
 }
 
 .pagination button:hover {
-  background-color: #0056b3;
+  background-color: #9E9E9E;
+  opacity: 0.5;
 }
 
 @media (max-width: 768px) {
   h1, h2 {
     margin-top: 1rem;
     margin-bottom: 0.5rem;
-    font-size: 1.5rem;
   }
 
   .search-bar input[type="text"] {

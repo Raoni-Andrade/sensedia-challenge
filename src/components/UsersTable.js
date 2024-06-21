@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { getUsers, getAlbumsByUserId, getPostsByUserId, deleteUser } from '../services/api';
-import NewUserForm from './NewUserForm';
 import Link from 'next/link';
+import '../css/global.css';
 import '../css/UsersTable.css';
-import List from './List';
 
 const UsersTable = ({ users, setUsers }) => {
-  // const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hoveredUser, setHoveredUser] = useState(null);
   const [userToRemove, setUserToRemove] = useState(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(5);
   const usersPerPage = 5;
   const [searchText, setSearchText] = useState('');
 
@@ -24,11 +22,13 @@ const UsersTable = ({ users, setUsers }) => {
             const usersAlbum = await getAlbumsByUserId(user.id);
             const usersPosts = await getPostsByUserId(user.id);
             const randomDaysOfWeek = generateRandomDaysOfWeek();
+            const randomCities = generateRandomCities();
             return { 
               ...user,
               albums: usersAlbum ? usersAlbum.length : 0,
               posts: usersPosts ? usersPosts.length : 0,
-              daysOfWeek: randomDaysOfWeek
+              daysOfWeek: randomDaysOfWeek,
+              city: randomCities
             };
           }))
           setUsers(updatedUsers);
@@ -54,6 +54,12 @@ const UsersTable = ({ users, setUsers }) => {
       }
     }
     return randomDays.join(', ');
+  };
+
+  const generateRandomCities = () => {
+    const cities = ['Nova York', 'Antuérpia', 'Belo Horizonte', 'Rio de Janeiro', 'Manaus', 'Paris', 'Breda', 'Bucareste', 'Dubrovnik'];
+    const randomIndex = Math.floor(Math.random() * cities.length);
+    return cities[randomIndex];
   };
 
   const handleDeleteUser = async (userId) => {
@@ -104,12 +110,65 @@ const UsersTable = ({ users, setUsers }) => {
     );
   });
 
+  // const getPagesToShow = (currentPage, totalPages) => {
+  //   let pagesToShow = [];
+
+  //   // Always show the first page
+  //   if (currentPage > 3) {
+  //     pagesToShow.push(1);
+  //   }
+
+  //   // Show pages around the current page
+  //   for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+  //     if (i > 1 && i < totalPages) {
+  //       pagesToShow.push(i);
+  //     }
+  //   }
+
+  //   // Always show the last page
+  //   if (currentPage < totalPages - 2) {
+  //     pagesToShow.push(totalPages);
+  //   }
+
+  //   return pagesToShow;
+  // };
+
+  const getPagesToShow = (currentPage, totalPages) => {
+    let pagesToShow = [];
+  
+    // Adicionar a página anterior, se existir
+    if (currentPage > 1) {
+      pagesToShow.push(currentPage - 1);
+    }
+  
+    // Adicionar a primeira página
+    pagesToShow.push(1);
+  
+    // Adicionar a página atual
+    pagesToShow.push(currentPage);
+  
+    // Adicionar a última página
+    pagesToShow.push(totalPages);
+  
+    // Adicionar a próxima página, se existir
+    if (currentPage < totalPages) {
+      pagesToShow.push(currentPage + 1);
+    }
+  
+    // Remover duplicatas e ordenar as páginas
+    pagesToShow = Array.from(new Set(pagesToShow)).sort((a, b) => a - b);
+  
+    return pagesToShow;
+  };
+
+  const pagesToShow = getPagesToShow(currentPage, totalPages);
+
   const totalPages = Math.ceil(users.length / usersPerPage);
   const displayedUsers = filteredUsers.slice((currentPage - 1) * usersPerPage, currentPage * usersPerPage);
 
   return (
     <div className="main-container">
-      <h1>Usuários</h1>
+      <h1 className="title">Usuários</h1>
       {isLoading ? (
         <p>Carregando tabela...</p>
       ) : (
@@ -145,6 +204,7 @@ const UsersTable = ({ users, setUsers }) => {
                 <th>ID</th>
                 <th>Nome</th>
                 <th>Email</th>
+                <th>Cidade</th>
                 <th>Dias da semana</th>
                 <th>Posts</th>
                 <th>Albuns</th>
@@ -165,6 +225,7 @@ const UsersTable = ({ users, setUsers }) => {
                     </Link>
                   </td>
                   <td>{user.email}</td>
+                  <td>{user.city}</td>
                   <td>{user.daysOfWeek}</td>
                   <td>{user.posts}</td>
                   <td>{user.albums}</td>
@@ -183,7 +244,7 @@ const UsersTable = ({ users, setUsers }) => {
             </tbody>
           </table>
           <div className="pagination">
-          {Array.from({ length: totalPages }, (_, index) => (
+          {/* {Array.from({ length: totalPages }, (_, index) => (
               <button
                 key={index + 1}
                 onClick={() => handlePageChange(index + 1)}
@@ -191,9 +252,54 @@ const UsersTable = ({ users, setUsers }) => {
               >
                 {index + 1}
               </button>
+            ))} */}
+
+          <button
+            onClick={() => handlePageChange(currentPage === 1 ? currentPage : currentPage - 1)}
+              // disabled={currentPage === 1}
+          >
+              Anterior
+            </button>
+
+            {/* Adicionar '...' se houver mais de duas páginas antes da página atual */}
+            {currentPage > 3 && <span>...</span>}
+            {/* Mostrar páginas antes da página atual */}
+            {pagesToShow.map((page, index) => (
+              (page !== 1 && page !== totalPages && currentPage > 3 && index === 0) ?
+              <span key="start-page" className="ellipsis">...</span> : 
+              <button 
+                key={index}
+                onClick={() => handlePageChange(page)}
+                className={currentPage === page ? 'current-page' : ''}
+                disabled={currentPage === index + 1}
+              >
+                {page}
+              </button>
             ))}
+            {/* Adicionar '...' se houver mais de duas páginas depois da página atual */}
+            {currentPage < totalPages - 2 && <span>...</span>}
+            {/* Adicionar página final, se não estiver presente */}
+            {!pagesToShow.includes(totalPages - 1) && (
+              <button onClick={() => handlePageChange(totalPages)}>{totalPages}</button>
+            )}
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            >
+              Próximo
+            </button>
+            <span>Ir para a página:</span>
+            <select
+              value={currentPage}
+              onChange={(e) => handlePageChange(Number(e.target.value))}
+            >
+              {Array.from({ length: totalPages }, (_, index) => (
+                <option key={index + 1} value={index + 1}>
+                  {index + 1}
+                </option>
+              ))}
+            </select>
           </div>
-          {/* <NewUserForm onUserAdded={handleUserAdded} /> */}
         </div>
       )}
     </div>

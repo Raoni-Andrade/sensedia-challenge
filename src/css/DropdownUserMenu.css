@@ -1,5 +1,8 @@
 .dropdown {
   position: relative;
+  z-index: 999;
+  display: flex;
+  align-items: center;
 }
 
 .dropdown-toggle {
@@ -26,7 +29,6 @@
 .dropdown-menu li {
   list-style: none;
   cursor: pointer;
-  
 }
 
 .dropdown-menu li:hover {
@@ -37,9 +39,11 @@
   display: block;
   padding: 10px 20px;
   text-decoration: none;
-  color: black;
+  background-color: black;
+  color: white;
+
 }
 
 .dropdown-menu a:hover {
-  /* background-color: #f0f0f0; */
-}
+  color: black
+  ;}
